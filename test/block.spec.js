@@ -14,16 +14,22 @@ describe("Block test", ()=>{
 
     it("should create a genesis block with default params", ()=>{
         let genesisBlock = Block.genesis()
-        console.log(genesisBlock);
+        //console.log(genesisBlock);
         expect(genesisBlock).to.have.deep.property("index", 0);
         expect(genesisBlock).to.have.deep.property("nonce", 0);
         expect(genesisBlock).to.have.deep.property("lasthash", "");
-        expect(genesisBlock).to.have.deep.property("transactions", []);
+        expect(genesisBlock).to.have.deep.property("transactions", [100]);
         expect(genesisBlock).to.have.deep.property("hash", "");
 
     
 
     })
+
+    it("should produce a hash",()=>{
+        let hash= Block.hash("prevhash",[{a:1,b:2}], 6)
+        //console.log(hash)
+        expect(hash).to.be.a('string'); 
+    }) 
 
 
 
