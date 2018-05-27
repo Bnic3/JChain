@@ -10,7 +10,7 @@ export default class Blockchain{
     addBlock(data){
        const chainLength = this.chain.length
        let lastBlock = this.chain[chainLength-1]
-       let nonce= "nonce from proof of work"
+       let nonce= this.proofOfWork(lastBlock.hash,data)
        let curHash = Block.hash(lastBlock.hash,data,nonce)
        let newBlock = new Block(chainLength,
                     nonce,
@@ -37,6 +37,25 @@ export default class Blockchain{
         return nonce
 
     }
+
+    validateChain(chain){
+        //Todo1: check if its the correct genesis block
+        if(JSON.stringify(chain[0]) !== JSON.stringify(Block.genesis())) return false;
+        //Todo2: check for the lasthashes
+        for (let i=1; i<chain.length; i++){
+            const currBlock = chain[i];
+            const lastBlock = chain[i-1];
+
+            if (lastBlock.hash !== currBlock.lasthash || 
+                currBlock.hash !== Block.hash(currBlock.lasthash,currBlock.transactions,currBlock.nonce)){
+                    return false;
+                }
+
+        }
+        return true;   
+    } 
+
+    //Todo: replace chain and validate chain functions
 
     toString(){
         return `${this.pendingTransactions}`

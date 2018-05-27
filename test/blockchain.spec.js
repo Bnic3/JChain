@@ -46,5 +46,20 @@ describe("Blockchain test",()=>{
 
     } )
 
+    it("it should return false for a currupt chain",()=>{
+        const blockData = [{from:"john"}, {from:"james"}]
+        bc.addBlock(blockData)
+        bc.chain.push({nonce : 87,
+           lasthash : "1234",
+            hash: "2345"})
+        expect(bc.validateChain(bc.chain)).to.be.equal(false)  
+        console.log(bc.chain);  
+
+    })
+
+    it("it should return true for a valid chain",()=>{
+        
+    })
+
 
 })
